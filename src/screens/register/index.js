@@ -52,8 +52,8 @@ export default function Register({navigation}) {
                 <Text>FAZER LOGIN</Text>
             </TouchableOpacity>
 
-            {err.length ? <Text>{err} </Text>: null}
-            {isAuth ? <Text>LOGADO COM SUCESSO</Text> : null}
+            {err.length ? <Text>{ err} </Text>: null}
+            {isAuth ? navigation.navigate('Home') : null}
         </View>
-    )
-}
+    );
+};
