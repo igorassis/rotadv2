@@ -1,30 +1,35 @@
-import React, {useState} from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import React, {useState} from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
+import errorFirebase from '../../configs/FirebaseError.js';
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isAuth, setIsAuth] = useState(false);
+    const [err, setErr] = useState('');
 
     const login = async () => {
         try{
-            console.log('EMAIL =>', email)
-            console.log('password =>', password)
             const user = await firebase.auth().signInWithEmailAndPassword(email, password);
             setIsAuth(true);
             console.log(user);
-        } catch (err) {
-            console.log(err);
-        }
-    }
+        } catch (error) {
+            let err = error.code;
+            if (errorFirebase[err]) {
+                setErr(errorFirebase[err]);
+            } else {
+                setErr(err);
+            };
+        };
+    };
 
     return (
         <View>
             <TextInput
                 placeholder="Digite seu e-mail"
                 value={email}
-                onChangeText={email => setEmail(email)}
+                onChangeText={Email => setEmail(Email)}
             />
             <TextInput
                 placeholder="Digite sua senha"
@@ -38,7 +43,8 @@ export default function Login({navigation}) {
                 <Text>REGISTER</Text>
             </TouchableOpacity>
 
+            {err.length ? <Text>{err} </Text>: null}
             {isAuth ? <Text>LOGADO COM SUCESSO</Text> : null}
         </View>
-    )
-}
+    );
+};
