@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "916366047050",
+    "firebase_url": "https://rodad-e3c42.firebaseio.com",
+    "project_id": "rodad-e3c42",
+    "storage_bucket": "rodad-e3c42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916366047050:android:01a562ad30ea757ef673b3",
+        "android_client_info": {
+          "package_name": "com.rotad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916366047050-fakft0obrdrehnoe184c7aat7rpkh16a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ9TWtXb1cSp44rMHNI12fz3GTio0EjxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916366047050-fakft0obrdrehnoe184c7aat7rpkh16a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
