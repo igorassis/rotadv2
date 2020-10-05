@@ -13,7 +13,6 @@ export default function Login({navigation}) {
         try{
             const user = await firebase.auth().signInWithEmailAndPassword(email, password);
             setIsAuth(true);
-            console.log(user);
         } catch (error) {
             let err = error.code;
             if (errorFirebase[err]) {
@@ -43,8 +42,8 @@ export default function Login({navigation}) {
                 <Text>REGISTER</Text>
             </TouchableOpacity>
 
-            {err.length ? <Text>{err} </Text>: null}
-            {isAuth ? <Text>LOGADO COM SUCESSO</Text> : null}
+            {err.length ? <Text> {err} </Text>: null}
+            {isAuth ? navigation.navigate('Home') : null}
         </View>
     );
 };
