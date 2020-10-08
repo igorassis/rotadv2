@@ -1,7 +1,33 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
+import styled from 'styled-components/native';
+
+const Container = styled(View)`
+    display: flex;
+    flex: 1;
+    background-color: #212121;
+    align-items: center;
+    padding-top: 48px;
+`;
+
+const StyledInput = styled(TextInput)`
+    height: 58px;
+    width: 90%;
+    background-color: #FFF;
+    margin-bottom: 16px;
+`;
+
+const LoginButton = styled(TouchableOpacity)`
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    border-radius: 50px;
+    height: 60px;
+    background-color: #CD3C3C;
+    margin-bottom: 16px;
+`;
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
@@ -24,26 +50,30 @@ export default function Login({navigation}) {
     };
 
     return (
-        <View>
-            <TextInput
+        <Container>
+            <Image source={require('../../assets/rotaD.png')} />
+            <StyledInput
                 placeholder="Digite seu e-mail"
                 value={email}
                 onChangeText={Email => setEmail(Email)}
+                style={{marginTop: 56}}
             />
-            <TextInput
+            <StyledInput
                 placeholder="Digite sua senha"
                 value={password}
+                secureTextEntry
                 onChangeText={Password => setPassword(Password)}
+                style={{marginBottom: 36}}
             />
-            <TouchableOpacity onPress={login}>
-                <Text>LOGAR</Text>
-            </TouchableOpacity>
+            <LoginButton onPress={login}>
+                <Text style={{color: "#FFF", fontSize: 18}}>Login</Text>
+            </LoginButton>
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text>REGISTER</Text>
+                <Text style={{color: "#FFF", fontSize: 18}}>Registre-se</Text>
             </TouchableOpacity>
 
-            {err.length ? <Text> {err} </Text>: null}
+            {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}> {err} </Text>: null}
             {isAuth ? navigation.navigate('Home') : null}
-        </View>
+        </Container>
     );
 };
