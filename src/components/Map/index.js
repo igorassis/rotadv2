@@ -9,21 +9,21 @@ export default function Map() {
     const [region, setRegion] = useState(null);
 
     useEffect(() => {
-        Geolocation.getCurrentPosition(
-            ({coords: { latitude, longitude }}) => {
-                setRegion({ latitude, longitude, latitudeDelta: 0.0143, longitudeDelta: 0.0134 });
-                console.log("REGION =>", region);
-            },
-            // (info) => {
-            //     console.log("INFO =>", info);
-            // },
-            () => {},
-            {
-                timeout: 3000,
-                enableHighAccuracy: true,
-                maximuAge: 1000,
-            }
-        )
+        async function getLocation(){
+            Geolocation.getCurrentPosition(
+                ({coords: { latitude, longitude }}) => {
+                    setRegion({ latitude, longitude, latitudeDelta: 0.0143, longitudeDelta: 0.0134 });
+                },
+                () => {},
+                {
+                    // timeout: 3000,
+                    enableHighAccuracy: true,
+                    maximuAge: 1000,
+                }
+            )
+        }
+        getLocation();
+        console.log("REGION =>", region);
     }, []);
 
     return (

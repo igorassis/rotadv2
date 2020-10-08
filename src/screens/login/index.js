@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
 import styled from 'styled-components/native';
+import { storeUserData } from '../../utils/storage';
 
 const Container = styled(View)`
     display: flex;
@@ -38,6 +39,7 @@ export default function Login({navigation}) {
     const login = async () => {
         try{
             const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+            storeUserData(user);
             setIsAuth(true);
         } catch (error) {
             let err = error.code;
