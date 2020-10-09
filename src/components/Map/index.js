@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { View, Text } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
@@ -11,6 +11,7 @@ export default function Map() {
     const [destino, setDestino] = useState(null);
     const [routeCoordinates, setRouteCoordinates] = useState([]);
     const [routeData, setRouteData] = useState(null);
+    const mapView = useRef(null);
 
     useEffect(() => {
         async function getLocation(){
@@ -28,6 +29,12 @@ export default function Map() {
         }
         getLocation();
     }, []);
+
+    useEffect(() => {
+        if(region && destino && mapView.current){
+            mapView.current.fitToCoordinates(routeCoordinates);
+        }
+    }, [routeCoordinates]);
 
     const makeRoute = async (data, details) => {
         let route_coordinates = [];
@@ -61,6 +68,7 @@ export default function Map() {
                 region={region}
                 showsUserLocation
                 loadingEnabled
+                ref={mapView}
             >
                 {routeCoordinates.length ? (
                     <>
