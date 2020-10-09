@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 
 const Container = styled(View)`
     display: flex;
+    /* flex-direction: ${props => props.flexDirectionContainer || "column"}; */
     flex: 1;
     background-color: #212121;
     align-items: center;
@@ -14,7 +15,7 @@ const Container = styled(View)`
 
 const StyledInput = styled(TextInput)`
     height: 58px;
-    width: 90%;
+    width: ${props => props.inputWidth || "90%"};
     background-color: #FFF;
     margin-bottom: 16px;
 `;
@@ -76,6 +77,57 @@ export default function Register({navigation}) {
                 onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
                 style={{marginBottom: 36}}
             />
+            
+                <StyledInput
+                    placeholder="Altura"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    inputWidth="150"
+                    keyboardType="numeric"
+                />
+                <StyledInput
+                    placeholder="Largura"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    inputWidth="150"
+                    keyboardType="numeric"
+                />
+        
+                <StyledInput
+                    placeholder="Cumprimento"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    inputWidth="150"
+                    keyboardType="numeric"
+                />
+                <StyledInput
+                    placeholder="Peso"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    inputWidth="150"
+                    keyboardType="numeric"
+                />
+                <StyledInput
+                    placeholder="N de Exios"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    inputWidth="150"
+                    keyboardType="numeric"
+                />
+                <StyledInput
+                    placeholder="Peso por eixo"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    inputWidth="150"
+                    keyboardType="numeric"
+                />
+                
             <RegisterButton onPress={register}>
                 <Text style={{color: "#FFF", fontSize: 18}}>Registrar</Text>
             </RegisterButton>
