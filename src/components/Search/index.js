@@ -2,13 +2,13 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-export default function Search() {
+export default function Search({getRoutes}) {
     return (
         <GooglePlacesAutocomplete 
             placeholder="Digite o destino da sua carga"
             placeholderTextColor="#333"
             onPress={(data, details) => {
-                console.log(data, details);
+                getRoutes(data, details);
             }}
             query={{
                 key: 'AIzaSyDyhv_pXanMg_uLlo7nv5W_h8gwh-zXdHg',
