@@ -23,7 +23,7 @@ export default function Search({getRoutes}) {
             styles={{
                 container: {
                     position: "absolute",
-                    top: 40,
+                    top: 80,
                     width: "100%"
                 },
                 textInputContainer: {
