@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import styled from 'styled-components/native';
 import Search from '../Search';
 import { getRoutes } from '../../utils/api';
 
-export default function Map() {
+export default function Map({navigation}) {
 
     const [region, setRegion] = useState(null);
     const [destino, setDestino] = useState(null);
@@ -35,6 +36,16 @@ export default function Map() {
             mapView.current.fitToCoordinates(routeCoordinates);
         }
     }, [routeCoordinates]);
+
+    const DrawerButton = styled(TouchableOpacity)`
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50px;
+        background-color: #212121;
+        margin-bottom: 16px;
+    `;
 
     const makeRoute = async (data, details) => {
         let route_coordinates = [];
@@ -78,7 +89,11 @@ export default function Map() {
                     </>
                 ) : null}
             </MapView>
+            <DrawerButton style={{position: 'absolute', top: 8, left: 16}} onPress={() => navigation.openDrawer()}>
+                <Image source={require('../../assets/hamburguer.png')} />
+            </DrawerButton>
             <Search getRoutes={makeRoute}/>
+            
         </View>
     )
 }
