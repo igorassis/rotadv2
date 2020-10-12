@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
 import styled from 'styled-components/native';
@@ -36,16 +36,17 @@ export default function Register({navigation}) {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isAuth, setIsAuth] = useState(false);
     const [err, setErr] = useState('');
+    const [form, setForm] = useState({});
 
     const register = async () => {
         try{
-            if (password !== confirmPassword) { 
-                setErr('As senhas não são iguais!')
-            } else {
-                const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const user = await firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    firebase.firestore().collection('Users').doc().set({form})
                 setIsAuth(true);
-            }
+                })
         } catch (error) {
+            console.log(form)
             let err = error.code;
             if (errorFirebase[err]) {
                 setErr(errorFirebase[err]);
@@ -57,6 +58,7 @@ export default function Register({navigation}) {
 
     return (
         <Container>
+            <ScrollView> 
             <Image source={require('../../assets/rotaD.png')} />
             <StyledInput
                 placeholder="Digite seu e-mail"
@@ -80,50 +82,38 @@ export default function Register({navigation}) {
             
                 <StyledInput
                     placeholder="Altura"
-                    value={confirmPassword}
-                    secureTextEntry
-                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    onChangeText={HeightRegister => setForm({...form, height: HeightRegister})}
                     inputWidth="150"
                     keyboardType="numeric"
                 />
                 <StyledInput
                     placeholder="Largura"
-                    value={confirmPassword}
-                    secureTextEntry
-                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    onChangeText={WidthRegister => setForm({...form, width: WidthRegister})}
                     inputWidth="150"
                     keyboardType="numeric"
                 />
         
                 <StyledInput
-                    placeholder="Cumprimento"
-                    value={confirmPassword}
-                    secureTextEntry
-                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    placeholder="Comprimento"
+                    onChangeText={LengthRegister => setForm({...form, length: LengthRegister})}
                     inputWidth="150"
                     keyboardType="numeric"
                 />
                 <StyledInput
                     placeholder="Peso"
-                    value={confirmPassword}
-                    secureTextEntry
-                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    onChangeText={WeightRegister => setForm({...form, weight: WeightRegister})}
                     inputWidth="150"
                     keyboardType="numeric"
                 />
                 <StyledInput
                     placeholder="N de Exios"
-                    value={confirmPassword}
-                    secureTextEntry
-                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    onChangeText={AxisRegister => setForm({...form, axisNumber: AxisRegister})}
                     inputWidth="150"
                     keyboardType="numeric"
                 />
                 <StyledInput
                     placeholder="Peso por eixo"
-                    value={confirmPassword}
-                    secureTextEntry
-                    onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
+                    onChangeText={AxleWeightRegister=> setForm({...form, axleWeight: AxleWeightRegister})}
                     inputWidth="150"
                     keyboardType="numeric"
                 />
@@ -137,6 +127,7 @@ export default function Register({navigation}) {
 
             {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}>{ err} </Text>: null}
             {isAuth ? navigation.navigate('Home') : null}
+            </ScrollView>
         </Container>
     );
 };
