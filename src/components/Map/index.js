@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import styled from 'styled-components/native';
@@ -57,6 +57,9 @@ export default function Map({navigation}) {
     const [destino, setDestino] = useState(null);
     const [routeCoordinates, setRouteCoordinates] = useState([]);
     const [routeData, setRouteData] = useState(null);
+    const [initialRouteData ,setInitialRouteData] = useState(null);
+    const [allRoutes, setAllRoutes] = useState([]);
+    const [alternativeRoute, setAlternativeRoute] = useState(false);
     const mapView = useRef(null);
 
     useEffect(() => {
@@ -82,6 +85,10 @@ export default function Map({navigation}) {
         }
     }, [routeCoordinates]);
 
+    useEffect(() => {
+            mapView.current.fitToCoordinates(routeCoordinates);
+    }, [allRoutes]);
+
 
     useEffect(() => {
         console.log('ROUTE DATA =>', routeData);
@@ -90,9 +97,24 @@ export default function Map({navigation}) {
     const goBack = () => {
         setDestino({});
         setRouteCoordinates([]);
+        setAllRoutes([]);
+        setAlternativeRoute(false);
     };
 
-    
+    const alternativeRoutes = () => {
+        if(allRoutes.length > 1){
+            setAlternativeRoute(true);
+        } else {
+            ToastAndroid.show(
+                "Sem rotas alternativas",
+                ToastAndroid.SHORT
+              );
+        }
+    }
+
+    const updateSummary = (route) => {
+        setRouteData(route);
+    }
 
     const makeRoute = async (data, details) => {
         let route_coordinates = [];
@@ -107,6 +129,8 @@ export default function Map({navigation}) {
         await getRoutes(route).then((res) => {
             if (res) {
                 setRouteData(res.data.response.route[0]);
+                setInitialRouteData(res.data.response.route[0]);
+                setAllRoutes(res.data.response.route);
                 res.data.response.route[0].shape.map( (m) => {
                     let latlong = m.split(',');
                     let latitude = parseFloat(latlong[0]);
@@ -120,20 +144,40 @@ export default function Map({navigation}) {
         });
     };
 
+    const randomColor = () => {
+        let hex = '#'+Math.floor(Math.random()*16777215).toString(16);
+        console.log('Random Color', hex);
+        return hex;
+    }
+    randomColor();
+
     return (
         <View style={{flex: 1}}>
             <MapView 
                 style={{ flex: 1 }}
-                region={region}
+                initialRegion={region}
                 showsUserLocation
                 loadingEnabled
                 ref={mapView}
             >
                 {routeCoordinates.length ? (
                     <>
-                        <Polyline coordinates={routeCoordinates} strokeWidth={7} strokeColor="#CD3C3C" geodesic={true}/>
+                        <Polyline coordinates={routeCoordinates} tappable onPress={() => updateSummary(initialRouteData)} strokeWidth={7} strokeColor="#CD3C3C" geodesic={true}/>
                         <Marker coordinate={{latitude: region.latitude, longitude: region.longitude}} title="Starting location"/>
                         <Marker coordinate={{latitude: destino.latitude, longitude: destino.longitude}} title="Finishlocation"/>
+                        {alternativeRoute && allRoutes.length > 1 ? 
+                            allRoutes.slice(1).map(route => {
+                                let route_coordinates = [];
+                                route.shape.map((m) => {
+                                    let latlong = m.split(',');
+                                    let latitude = parseFloat(latlong[0]);
+                                    let longitude = parseFloat(latlong[1]);
+                                    route_coordinates.push({latitude: latitude, longitude: longitude});
+                                });
+                                let color = randomColor();
+                                return <Polyline coordinates={route_coordinates} tappable onPress={() => updateSummary(route)} strokeWidth={7} strokeColor={color} geodesic={true}/>
+                            }) : null
+                        }
                     </>
                 ) : null}
             </MapView>
@@ -161,9 +205,9 @@ export default function Map({navigation}) {
                             <SummaryText>{routeData.waypoint[1].mappedRoadName}</SummaryText>
                             <SummaryText>{formatDistance(routeData.summary.distance)} Km</SummaryText>
                             <SummaryText>{formatTime(routeData.summary.travelTime)} Horas</SummaryText>
-                            <NewRoute onPress={() => goBack()}>
+                            {alternativeRoute ? <View style={{height: 40}} /> : <NewRoute onPress={() => alternativeRoutes()}>
                                 <SummaryText>Rotas alternativas</SummaryText>
-                            </NewRoute> 
+                            </NewRoute>} 
                         </SummaryColumn>
                     </SummaryContainer>
                 </>
