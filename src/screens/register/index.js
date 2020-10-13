@@ -64,9 +64,6 @@ export default function Register({navigation}) {
             const email = form.email;
             if (password !== confirmPassword) { 
                 setErr('As senhas não são iguais!');
-            } else if (form === {''}) {
-                setErr('Insira todos os dados')
-
             } else {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 await storeUserData(form);
@@ -121,7 +118,7 @@ export default function Register({navigation}) {
                 </Form>
                 <Form>
                 <StyledInput
-                    placeholder="Peso Máximo Suportado por Exio"
+                    placeholder="Peso Máximo Suportado por Eixo"
                     onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: parseFloat(WeightPerAxle)})}   
                 />
                 <Text>toneladas</Text>
