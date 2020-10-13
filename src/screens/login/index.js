@@ -39,7 +39,7 @@ export default function Login({navigation}) {
     const login = async () => {
         try{
             const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-            storeUserData(user);
+            // storeUserData(user);
             setIsAuth(true);
         } catch (error) {
             let err = error.code;

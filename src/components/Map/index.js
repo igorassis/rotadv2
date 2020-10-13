@@ -99,6 +99,7 @@ export default function Map({navigation}) {
         setRouteCoordinates([]);
         setAllRoutes([]);
         setAlternativeRoute(false);
+        mapView.current.fitToCoordinates(region);
     };
 
     const alternativeRoutes = () => {
