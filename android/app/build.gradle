@@ -145,6 +145,12 @@ android {
         }
     }
     signingConfigs {
+        release {
+            storeFile file('rotad.keystore')
+            storePassword 'rotadapp'
+            keyAlias 'rotad'
+            keyPassword 'rotadapp'
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
