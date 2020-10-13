@@ -9,6 +9,15 @@ export const storeUserData = async (user) => {
     }
 };
 
+export const updateUserData = async (user) => {
+    try{
+        const jsonUser = JSON.stringify(user)
+        await AsyncStorage.mergeItem('@user', jsonUser);
+    }catch(error){
+        console.log(error);
+    }
+};
+
 export const retriveUserData = async () => {
     const user = await AsyncStorage.getItem('@user')
     console.log('USER ==> ', JSON.parse(user));

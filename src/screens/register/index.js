@@ -36,7 +36,7 @@ const StyledInput = styled(TextInput)`
 
 const ImageLogo = styled(Image)`
     margin: 70px 0;
- `
+ `;
 
 const RegisterButton = styled(TouchableOpacity)`
     align-items: center;
@@ -58,7 +58,7 @@ export default function Register({navigation}) {
 
     const register = async () => {
         try{
-            console.log(form)
+            
             const password = form.password;
             const confirmPassword = form.confirmPassword;
             const email = form.email;
@@ -118,7 +118,7 @@ export default function Register({navigation}) {
                 </Form>
                 <Form>
                 <StyledInput
-                    placeholder="Peso Máximo Suportado por Exio"
+                    placeholder="Peso Máximo Suportado por Eixo"
                     onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: parseFloat(WeightPerAxle)})}   
                 />
                 <Text>toneladas</Text>
