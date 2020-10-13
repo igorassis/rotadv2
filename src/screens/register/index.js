@@ -35,7 +35,7 @@ const StyledInput = styled(TextInput)`
 `;
 
 const ImageLogo = styled(Image)`
-    margin: 70px 0;
+    margin: 60px 0;
  `;
 
 const RegisterButton = styled(TouchableOpacity)`
@@ -46,6 +46,14 @@ const RegisterButton = styled(TouchableOpacity)`
     height: 60px;
     background-color: #CD3C3C;
     margin-top: 16px;
+`;
+
+const Label = styled(Text)`
+    color: #FFF;
+    font-size: 16;
+    align-self: flex-start;
+    margin-left: 20;
+
 `;
 
 export default function Register({navigation}) {
@@ -84,18 +92,22 @@ export default function Register({navigation}) {
             <ScrollView>
             <Container>
                 <ImageLogo source={require('../../assets/rotaD.png')} />
+                <Text style={{color: "#FFF", fontSize: 22, paddingBottom: 30}}>Informações Pessoais</Text>
+                <Label>Nome</Label>
                 <Form>
                 <StyledInput
                     placeholder="Digite seu nome"
                     onChangeText={Name => setForm({...form, name:Name})}
                 />
                 </Form>
+                <Label>E-mail</Label>
                 <Form>
                 <StyledInput
                     placeholder="Digite seu e-mail"
                     onChangeText={Email => setForm({...form, email:Email})}
                 />
                 </Form>
+                <Label>Senha</Label>
                 <Form>
                 <StyledInput
                     placeholder="Digite sua senha"
@@ -103,6 +115,7 @@ export default function Register({navigation}) {
                     onChangeText={Password => setForm({...form, password:Password})}
                 />
                 </Form>
+                <Label>Confirme Senha</Label>
                 <Form>
                 <StyledInput
                     placeholder="Confirme sua senha"
@@ -110,12 +123,15 @@ export default function Register({navigation}) {
                     onChangeText={ConfirmPassword => setForm({...form, confirmPassword:ConfirmPassword})}
                 />
                 </Form>
+                <Text style={{color: "#FFF", fontSize: 22, paddingTop:30, paddingBottom:30}}>Informações do Caminhão</Text>
+                <Label>Nº de Eixos</Label>
                 <Form>
                 <StyledInput
                     placeholder="Nº de Eixos"
                     onChangeText={AxleCount => setForm({...form, axleCount: parseFloat(AxleCount)})}   
                 />
                 </Form>
+                <Label>Peso Máximo Suportado por Eixo</Label>
                 <Form>
                 <StyledInput
                     placeholder="Peso Máximo Suportado por Eixo"
@@ -123,6 +139,7 @@ export default function Register({navigation}) {
                 />
                 <Text>toneladas</Text>
                 </Form>
+                <Label>Peso Máximo Suportado</Label>
                 <Form>
                 <StyledInput
                     placeholder="Peso Máximo Suportado"
@@ -130,6 +147,7 @@ export default function Register({navigation}) {
                 />
                 <Text>toneladas</Text>
                 </Form>
+                <Label>Altura</Label>
                 <Form>
                     <StyledInput
                         placeholder="Altura"
@@ -137,6 +155,7 @@ export default function Register({navigation}) {
                     />
                     <Text>metros</Text>
                 </Form>
+                <Label>Largura</Label>
                 <Form>
                 <StyledInput
                     placeholder="Largura"
@@ -144,6 +163,7 @@ export default function Register({navigation}) {
                 />
                 <Text>metros</Text>
                 </Form>
+                <Label>Comprimento</Label>
                 <Form>
                 <StyledInput
                     placeholder="Comprimento"

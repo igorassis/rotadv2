@@ -16,7 +16,7 @@ export default function Map({navigation}) {
         width: 60px;
         height: 60px;
         border-radius: 50px;
-        background-color: #212121;
+        background-color: #fff;
         margin-bottom: 16px;
     `;
 
@@ -51,6 +51,11 @@ export default function Map({navigation}) {
     const SummaryText = styled(Text)`
         font-size: 16px;
         color: #FFF;
+    `;
+
+    const ImageButton = styled(Image)`
+        height: 60px;
+        width: 60px;
     `;
 
     const [region, setRegion] = useState(null);
@@ -208,7 +213,7 @@ export default function Map({navigation}) {
             </MapView>
 
             <DrawerButton style={{position: 'absolute', top: 8, left: 16}} onPress={() => navigation.openDrawer()}>
-                <Image source={require('../../assets/hamburguer.png')} />
+                <ImageButton source={require('../../assets/hamburguer.png')} />
             </DrawerButton>
 
             {!routeCoordinates.length ? <Search getRoutes={makeRoute}/> : null}

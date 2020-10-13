@@ -27,6 +27,13 @@ export default function Home({navigation}) {
         background-color: #E85858;
     `;
 
+    const ContainerButton = styled(View)`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 76%;
+    `;
+
 
     const [user, setUser] = useState({});
 
@@ -48,6 +55,7 @@ export default function Home({navigation}) {
                     {/* mudar para nome */}
                     <Text style={{color: '#FFF', fontSize: 18, }}>{userInfo ? userInfo.name : null}</Text>
                 </Header>
+                <ContainerButton>
                 <Button
                 title="Seu perfil"
                 color="#41A8E8"
@@ -57,14 +65,14 @@ export default function Home({navigation}) {
                 }}
                 />
                 <Button
-                style={{position: 'absolute', bottom: 0}}
                 title="Logout"
-                color="#41A8E8"
+                color="#E85858"
                 onPress={() => {
                     // Navigate using the `navigation` prop that you received
                     props.navigation.navigate('login');
                 }}
                 />
+                </ContainerButton>
             </DrawerContainer>
         );
       }
