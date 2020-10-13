@@ -35,7 +35,7 @@ const StyledInput = styled(TextInput)`
 
 const ImageLogo = styled(Image)`
     margin: 70px 0;
- `
+ `;
 
 const RegisterButton = styled(TouchableOpacity)`
     align-items: center;
@@ -57,12 +57,15 @@ export default function Register({navigation}) {
 
     const register = async () => {
         try{
-            console.log(form)
+            
             const password = form.password;
             const confirmPassword = form.confirmPassword;
             const email = form.email;
             if (password !== confirmPassword) { 
                 setErr('As senhas não são iguais!');
+            } else if (form === {''}) {
+                setErr('Insira todos os dados')
+
             } else {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 setIsAuth(true);

@@ -38,9 +38,13 @@ export default function Login({navigation}) {
 
     const login = async () => {
         try{
+            if (email =='' || password == '') {
+                setErr('Insira seus dados')
+            } else { 
             const user = await firebase.auth().signInWithEmailAndPassword(email, password);
             storeUserData(user);
             setIsAuth(true);
+            }
         } catch (error) {
             let err = error.code;
             if (errorFirebase[err]) {
