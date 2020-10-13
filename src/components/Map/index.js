@@ -99,6 +99,7 @@ export default function Map({navigation}) {
         setRouteCoordinates([]);
         setAllRoutes([]);
         setAlternativeRoute(false);
+        mapView.current.fitToCoordinates(region);
     };
 
     const alternativeRoutes = () => {
@@ -186,7 +187,7 @@ export default function Map({navigation}) {
                 <Image source={require('../../assets/hamburguer.png')} />
             </DrawerButton>
 
-            <Search getRoutes={makeRoute}/>
+            {!routeCoordinates.length ? <Search getRoutes={makeRoute}/> : null}
 
             {routeCoordinates.length ? (
                 <>
@@ -206,7 +207,7 @@ export default function Map({navigation}) {
                             <SummaryText>{formatDistance(routeData.summary.distance)} Km</SummaryText>
                             <SummaryText>{formatTime(routeData.summary.travelTime)} Horas</SummaryText>
                             {alternativeRoute ? <View style={{height: 40}} /> : <NewRoute onPress={() => alternativeRoutes()}>
-                                <SummaryText>Rotas alternativas</SummaryText>
+                                <Text style={{color: "#FFF", fontSize: 14}}>Rotas alternativas</Text>
                             </NewRoute>} 
                         </SummaryColumn>
                     </SummaryContainer>

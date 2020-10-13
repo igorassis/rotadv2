@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'reac
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
 import styled from 'styled-components/native';
+import { storeUserData, getData } from '../../utils/storage';
 
 const Container = styled(View)`
     display: flex;
@@ -65,6 +66,7 @@ export default function Register({navigation}) {
                 setErr('As senhas não são iguais!');
             } else {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                await storeUserData(form);
                 setIsAuth(true);
             }
         } catch (error) {
@@ -111,41 +113,41 @@ export default function Register({navigation}) {
                 <Form>
                 <StyledInput
                     placeholder="Nº de Eixos"
-                    onChangeText={AxleCount => setForm({...form, axleCount:AxleCount})}   
+                    onChangeText={AxleCount => setForm({...form, axleCount: parseFloat(AxleCount)})}   
                 />
                 </Form>
                 <Form>
                 <StyledInput
                     placeholder="Peso Máximo Suportado por Exio"
-                    onChangeText={WeightPerAxle => setForm({...form, weightPerAxle:WeightPerAxle})}   
+                    onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: parseFloat(WeightPerAxle)})}   
                 />
                 <Text>toneladas</Text>
                 </Form>
                 <Form>
                 <StyledInput
                     placeholder="Peso Máximo Suportado"
-                    onChangeText={LimitedWeight => setForm({...form, limitedWeight:LimitedWeight})}   
+                    onChangeText={LimitedWeight => setForm({...form, limitedWeight: parseFloat(LimitedWeight)})}   
                 />
                 <Text>toneladas</Text>
                 </Form>
                 <Form>
                     <StyledInput
                         placeholder="Altura"
-                        onChangeText={Height => setForm({...form, height:Height})}   
+                        onChangeText={Height => setForm({...form, height: parseFloat(Height)})}   
                     />
                     <Text>metros</Text>
                 </Form>
                 <Form>
                 <StyledInput
                     placeholder="Largura"
-                    onChangeText={Width => setForm({...form, width:Width})}   
+                    onChangeText={Width => setForm({...form, width: parseFloat(Width)})}   
                 />
                 <Text>metros</Text>
                 </Form>
                 <Form>
                 <StyledInput
                     placeholder="Comprimento"
-                    onChangeText={Length => setForm({...form, length:Length})}   
+                    onChangeText={Length => setForm({...form, length: parseFloat(Length)})}   
                 />
                 <Text>metros</Text>
                 </Form>
