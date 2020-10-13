@@ -152,6 +152,29 @@ export default function Map({navigation}) {
     }
     randomColor();
 
+    let colorCount = 0;
+    const routeColors = {
+        first: '#353E90',
+        second: '#9C983A',
+        thrity: '#C2C2C2',
+        fourth: '#D0D0D0',
+    };
+
+    const switchColors = (colorCount) => {
+        switch(colorCount) {
+            case 1:
+                return routeColors.first;
+            case 2:
+                return routeColors.second;
+            case 3:
+                return routeColors.third;
+            case 4:
+                return routeColors.fourth;
+        }
+    }
+
+
+
     return (
         <View style={{flex: 1}}>
             <MapView 
@@ -169,14 +192,15 @@ export default function Map({navigation}) {
                         {alternativeRoute && allRoutes.length > 1 ? 
                             allRoutes.slice(1).map(route => {
                                 let route_coordinates = [];
+                                console.log('ALTERNATIVE ROUTE =>', route)
                                 route.shape.map((m) => {
                                     let latlong = m.split(',');
                                     let latitude = parseFloat(latlong[0]);
                                     let longitude = parseFloat(latlong[1]);
                                     route_coordinates.push({latitude: latitude, longitude: longitude});
                                 });
-                                let color = randomColor();
-                                return <Polyline coordinates={route_coordinates} tappable onPress={() => updateSummary(route)} strokeWidth={7} strokeColor={color} geodesic={true}/>
+                                let color = switchColors(colorCount+1);
+                                    return <Polyline coordinates={route_coordinates} tappable onPress={() => updateSummary(route)} strokeWidth={7} strokeColor={color} geodesic={true}/>
                             }) : null
                         }
                     </>
