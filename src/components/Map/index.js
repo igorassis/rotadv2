@@ -23,9 +23,9 @@ export default function Map({navigation}) {
     const NewRoute = styled(TouchableOpacity)`
         align-items: center;
         justify-content: center;
-        width: 120px;
+        width: 160px;
         border-radius: 50px;
-        height: 40px;
+        height: 42px;
         background-color: #CD3C3C;
     `;
 
@@ -34,9 +34,8 @@ export default function Map({navigation}) {
         flex-direction: row;
         bottom: 0;
         width: 100%;
-        height: 160px;
-        padding-left: 8px;
-        padding-bottom: 8px;
+        height: 200px;
+        padding: 10px 0 10px 14px;
         background-color: #212121;
     `;
 
@@ -236,7 +235,7 @@ export default function Map({navigation}) {
                             <SummaryText>{formatDistance(routeData.summary.distance)} Km</SummaryText>
                             <SummaryText>{formatTime(routeData.summary.travelTime)} Horas</SummaryText>
                             {alternativeRoute ? <View style={{height: 40}} /> : <NewRoute onPress={() => alternativeRoutes()}>
-                                <Text style={{color: "#FFF", fontSize: 14}}>Rotas alternativas</Text>
+                                <Text style={{color: "#FFF", fontSize: 16}}>Rotas alternativas</Text>
                             </NewRoute>} 
                         </SummaryColumn>
                     </SummaryContainer>

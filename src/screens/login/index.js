@@ -71,6 +71,7 @@ export default function Login({navigation}) {
                 onChangeText={Password => setPassword(Password)}
                 style={{marginBottom: 36}}
             />
+            {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18, maxWidth: 320, textAlign: "center"}}>{ err} </Text>: null}
             <LoginButton onPress={login}>
                 <Text style={{color: "#FFF", fontSize: 18}}>Login</Text>
             </LoginButton>
@@ -78,7 +79,6 @@ export default function Login({navigation}) {
                 <Text style={{color: "#FFF", fontSize: 18}}>Registre-se</Text>
             </TouchableOpacity>
 
-            {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}> {err} </Text>: null}
             {isAuth ? navigation.navigate('Home') : null}
         </Container>
     );

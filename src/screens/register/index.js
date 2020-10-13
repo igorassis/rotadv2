@@ -57,14 +57,41 @@ const Label = styled(Text)`
 `;
 
 export default function Register({navigation}) {
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [confirmPassword, setConfirmPassword] = useState('');
     const [isAuth, setIsAuth] = useState(false);
     const [form, setForm] = useState({});
     const [err, setErr] = useState('');
 
+    const validated = () => {
+
+        if (form.name == undefined) {
+            setErr("Por favor, preencha seu nome.");
+            return;
+        };
+        if (form.axleCount == undefined) {
+            setErr("Por favor, preencha a quantidade de eixos.");
+            return;
+        };
+        if (form.weightPerAxle == undefined) {
+            setErr("Por favor, preencha o peso suportado por cada eixo.");
+            return;
+        };
+        if (form.limitedWeight == undefined) {
+            setErr("Por favor, preencha o peso total suportado.");
+            return;
+        };
+        if (form.height == undefined) {
+            setErr("Por favor, preencha a altura do caminhão.");
+            return;
+        };
+        if (form.width == undefined) {
+            setErr("Por favor, preencha a largura do caminhão.");
+            return;
+        }; 
+        register();
+    };
+
     const register = async () => {
+      
         try{
             
             const password = form.password;
@@ -172,14 +199,14 @@ export default function Register({navigation}) {
                 <Text>metros</Text>
                 </Form>
 
-                <RegisterButton onPress={register}>
+                {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18, maxWidth: 320, textAlign: "center"}}>{ err} </Text>: null}
+                <RegisterButton onPress={validated}>
                     <Text style={{color: "#FFF", fontSize: 18}}>Registrar</Text>
                 </RegisterButton>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={{color: "#FFF", fontSize: 18, padding: 12}}>Já é registrado? Faça o login. </Text>
                 </TouchableOpacity>
 
-                {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}>{ err} </Text>: null}
                 {isAuth ? navigation.navigate('Home') : null}
                 </Container>
             </ScrollView>
