@@ -1,23 +1,41 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
 import styled from 'styled-components/native';
 
 const Container = styled(View)`
     display: flex;
+    flex-direction: column;
+    /* width:100%; */
     flex: 1;
+    justify-content: center;
     background-color: #212121;
     align-items: center;
-    padding-top: 48px;
+    /* padding-top: 48px; */
+`;
+
+const Form = styled(View)`
+    display: flex;
+    flex-direction: row;
+    width:90%;
+    height: 60px;
+    background-color: white;
+    margin: 10px 0;
+    justify-content: flex-start;
+    align-items: center;
 `;
 
 const StyledInput = styled(TextInput)`
     height: 58px;
-    width: 90%;
+    width: 80%;
     background-color: #FFF;
-    margin-bottom: 16px;
+    /* margin-top: 16px; */
 `;
+
+const ImageLogo = styled(Image)`
+    margin: 70px 0;
+ `
 
 const RegisterButton = styled(TouchableOpacity)`
     align-items: center;
@@ -26,20 +44,25 @@ const RegisterButton = styled(TouchableOpacity)`
     border-radius: 50px;
     height: 60px;
     background-color: #CD3C3C;
-    margin-bottom: 16px;
+    margin-top: 16px;
 `;
 
 export default function Register({navigation}) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [confirmPassword, setConfirmPassword] = useState('');
     const [isAuth, setIsAuth] = useState(false);
+    const [form, setForm] = useState({});
     const [err, setErr] = useState('');
 
     const register = async () => {
         try{
+            console.log(form)
+            const password = form.password;
+            const confirmPassword = form.confirmPassword;
+            const email = form.email;
             if (password !== confirmPassword) { 
-                setErr('As senhas não são iguais!')
+                setErr('As senhas não são iguais!');
             } else {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 setIsAuth(true);
@@ -55,36 +78,90 @@ export default function Register({navigation}) {
     };
 
     return (
-        <Container>
-            <Image source={require('../../assets/rotaD.png')} />
-            <StyledInput
-                placeholder="Digite seu e-mail"
-                value={email}
-                onChangeText={Email => setEmail(Email)}
-                style={{marginTop: 56}}
-            />
-            <StyledInput
-                placeholder="Digite sua senha"
-                value={password}
-                secureTextEntry
-                onChangeText={Password => setPassword(Password)}
-            />
-            <StyledInput
-                placeholder="Confirme sua senha"
-                value={confirmPassword}
-                secureTextEntry
-                onChangeText={ConfirmPassword => setConfirmPassword(ConfirmPassword)}
-                style={{marginBottom: 36}}
-            />
-            <RegisterButton onPress={register}>
-                <Text style={{color: "#FFF", fontSize: 18}}>Registrar</Text>
-            </RegisterButton>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={{color: "#FFF", fontSize: 18}}>Já é registrado? Faça o login. </Text>
-            </TouchableOpacity>
+        <View>
+            <ScrollView>
+            <Container>
+                <ImageLogo source={require('../../assets/rotaD.png')} />
+                <Form>
+                <StyledInput
+                    placeholder="Digite seu nome"
+                    onChangeText={Name => setForm({...form, name:Name})}
+                />
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Digite seu e-mail"
+                    onChangeText={Email => setForm({...form, email:Email})}
+                />
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Digite sua senha"
+                    secureTextEntry
+                    onChangeText={Password => setForm({...form, password:Password})}
+                />
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Confirme sua senha"
+                    secureTextEntry
+                    onChangeText={ConfirmPassword => setForm({...form, confirmPassword:ConfirmPassword})}
+                />
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Nº de Eixos"
+                    onChangeText={AxleCount => setForm({...form, axleCount:AxleCount})}   
+                />
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Peso Máximo Suportado por Exio"
+                    onChangeText={WeightPerAxle => setForm({...form, weightPerAxle:WeightPerAxle})}   
+                />
+                <Text>toneladas</Text>
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Peso Máximo Suportado"
+                    onChangeText={LimitedWeight => setForm({...form, limitedWeight:LimitedWeight})}   
+                />
+                <Text>toneladas</Text>
+                </Form>
+                <Form>
+                    <StyledInput
+                        placeholder="Altura"
+                        onChangeText={Height => setForm({...form, height:Height})}   
+                    />
+                    <Text>metros</Text>
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Largura"
+                    onChangeText={Width => setForm({...form, width:Width})}   
+                />
+                <Text>metros</Text>
+                </Form>
+                <Form>
+                <StyledInput
+                    placeholder="Comprimento"
+                    onChangeText={Length => setForm({...form, length:Length})}   
+                />
+                <Text>metros</Text>
+                </Form>
 
-            {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}>{ err} </Text>: null}
-            {isAuth ? navigation.navigate('Home') : null}
-        </Container>
+                <RegisterButton onPress={register}>
+                    <Text style={{color: "#FFF", fontSize: 18}}>Registrar</Text>
+                </RegisterButton>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={{color: "#FFF", fontSize: 18, padding: 12}}>Já é registrado? Faça o login. </Text>
+                </TouchableOpacity>
+
+                {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}>{ err} </Text>: null}
+                {isAuth ? navigation.navigate('Home') : null}
+                </Container>
+            </ScrollView>
+            </View>
+        
     );
 };
