@@ -42,7 +42,7 @@ export default function Login({navigation}) {
                 setErr('Insira seus dados')
             } else { 
             const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-            storeUserData(user);
+            // storeUserData(user);
             setIsAuth(true);
             }
         } catch (error) {
