@@ -50,9 +50,9 @@ const RegisterButton = styled(TouchableOpacity)`
 
 const Label = styled(Text)`
     color: #FFF;
-    font-size: 16;
+    font-size: 16px;
     align-self: flex-start;
-    margin-left: 20;
+    margin-left: 20px;
 
 `;
 

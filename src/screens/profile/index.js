@@ -59,9 +59,9 @@ const ImageButtonBack = styled(Image)`
 
 const Label = styled(Text)`
 color: #FFF;
-font-size: 16;
+font-size: 16px;
 align-self: flex-start;
-margin-left: 20;
+margin-left: 20px;
 
 `;
 
@@ -88,8 +88,19 @@ export default function Profile({navigation}) {
 
     const updateProfile = async () => {
         try {
-            console.log('to aqui')
-            await updateUserData(form).then(() => {
+            let newForm = {
+                name: form.name,
+                email: form.email,
+                password: form.password,
+                confirmPassword: form.confirmPassword,
+                axleCount: parseFloat(form.axleCount),
+                weightPerAxle: parseFloat(form.weightPerAxle),
+                limitedWeight: parseFloat(form.limitedWeight),
+                height: parseFloat(form.height),
+                width: parseFloat(form.width),
+                length: parseFloat(form.length),
+            };
+            await updateUserData(newForm).then(() => {
                 ToastAndroid.show(
                     "Perfil atualizado com sucesso!",
                     ToastAndroid.SHORT
@@ -109,7 +120,7 @@ export default function Profile({navigation}) {
         );
     }
     
-    if(form.length){
+    if(form !== {}){
         return (
             <View>
                 <ScrollView>
@@ -162,7 +173,7 @@ export default function Profile({navigation}) {
                     <StyledInput
                         value={form.axleCount.toString()}
                         placeholder="Nº de Eixos"
-                        onChangeText={AxleCount => setForm({...form, axleCount: parseFloat(AxleCount)})}   
+                        onChangeText={AxleCount => setForm({...form, axleCount: AxleCount})}   
                     />
                     </Form>
                     <Label>Peso Máximo Suportado por Eixo</Label>
@@ -170,7 +181,7 @@ export default function Profile({navigation}) {
                     <StyledInput
                         value={form.weightPerAxle.toString()}
                         placeholder="Peso Máximo Suportado por Eixo"
-                        onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: parseFloat(WeightPerAxle)})}   
+                        onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: WeightPerAxle})}   
                     />
                     <Text>toneladas</Text>
                     </Form>
@@ -179,7 +190,7 @@ export default function Profile({navigation}) {
                     <StyledInput
                         value={form.limitedWeight.toString()}
                         placeholder="Peso Máximo Suportado"
-                        onChangeText={LimitedWeight => setForm({...form, limitedWeight: parseFloat(LimitedWeight)})}   
+                        onChangeText={LimitedWeight => setForm({...form, limitedWeight: LimitedWeight})}   
                     />
                     <Text>toneladas</Text>
                     </Form>
@@ -188,7 +199,7 @@ export default function Profile({navigation}) {
                         <StyledInput
                             value={form.height.toString()}
                             placeholder="Altura"
-                            onChangeText={Height => setForm({...form, height: parseFloat(Height)})}   
+                            onChangeText={Height => setForm({...form, height: Height})}   
                         />
                         <Text>metros</Text>
                     </Form>
@@ -197,7 +208,7 @@ export default function Profile({navigation}) {
                     <StyledInput
                         value={form.width.toString()}
                         placeholder="Largura"
-                        onChangeText={Width => setForm({...form, width: parseFloat(Width)})}   
+                        onChangeText={Width => setForm({...form, width: Width})}   
                     />
                     <Text>metros</Text>
                     </Form>
@@ -206,7 +217,7 @@ export default function Profile({navigation}) {
                     <StyledInput
                         value={form.length.toString()}
                         placeholder="Comprimento"
-                        onChangeText={Length => setForm({...form, length: parseFloat(Length)})}   
+                        onChangeText={Length => setForm({...form, length: Length})}   
                     />
                     <Text>metros</Text>
                     </Form>

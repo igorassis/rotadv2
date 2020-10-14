@@ -196,14 +196,14 @@ export default function Map({navigation}) {
                         {alternativeRoute && allRoutes.length > 1 ? 
                             allRoutes.slice(1).map(route => {
                                 let route_coordinates = [];
-                                console.log('ALTERNATIVE ROUTE =>', route)
                                 route.shape.map((m) => {
                                     let latlong = m.split(',');
                                     let latitude = parseFloat(latlong[0]);
                                     let longitude = parseFloat(latlong[1]);
                                     route_coordinates.push({latitude: latitude, longitude: longitude});
                                 });
-                                let color = switchColors(colorCount+1);
+                                colorCount++;
+                                let color = switchColors(colorCount);
                                     return <Polyline coordinates={route_coordinates} tappable onPress={() => updateSummary(route)} strokeWidth={7} strokeColor={color} geodesic={true}/>
                             }) : null
                         }
