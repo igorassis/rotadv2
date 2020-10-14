@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
@@ -57,7 +57,6 @@ const Label = styled(Text)`
 `;
 
 export default function Register({navigation}) {
-    const [isAuth, setIsAuth] = useState(false);
     const [form, setForm] = useState({});
     const [err, setErr] = useState('');
 
@@ -102,7 +101,7 @@ export default function Register({navigation}) {
             } else {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 await storeUserData(form);
-                setIsAuth(true);
+                navigation.navigate('Home');
             }
         } catch (error) {
             let err = error.code;
@@ -206,8 +205,6 @@ export default function Register({navigation}) {
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={{color: "#FFF", fontSize: 18, padding: 12}}>Já é registrado? Faça o login. </Text>
                 </TouchableOpacity>
-
-                {isAuth ? navigation.navigate('Home') : null}
                 </Container>
             </ScrollView>
             </View>
