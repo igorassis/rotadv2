@@ -12,6 +12,7 @@ async function getData(){
 getData();
 
 export const getRoutes = async (route) => {
+    await getData();
     console.log('USER DATA API =>', user);
     return await axios.get(baseUrl+`?apiKey=${API_KEY}&mode=fastest;truck&waypoint0=geo!${route.from_lat},${route.from_long}&waypoint1=geo!${route.to_lat},${route.to_long}&language=pt-br&routeattributes=sh,legs,bb,gr&alternatives=4&height=${user.height}&width=${user.width}&length=${user.length}&limitedWeight=${user.limitedWeight}&weightPerAxle=${user.weightPerAxle}&axleCount=${user.axleCount}`).then(
         (res) => {

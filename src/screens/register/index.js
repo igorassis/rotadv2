@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import firebase from 'react-native-firebase';
 import errorFirebase from '../../configs/FirebaseError.js';
@@ -35,7 +35,7 @@ const StyledInput = styled(TextInput)`
 `;
 
 const ImageLogo = styled(Image)`
-    margin: 70px 0;
+    margin: 60px 0;
  `;
 
 const RegisterButton = styled(TouchableOpacity)`
@@ -48,15 +48,49 @@ const RegisterButton = styled(TouchableOpacity)`
     margin-top: 16px;
 `;
 
+const Label = styled(Text)`
+    color: #FFF;
+    font-size: 16px;
+    align-self: flex-start;
+    margin-left: 20px;
+
+`;
+
 export default function Register({navigation}) {
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [confirmPassword, setConfirmPassword] = useState('');
-    const [isAuth, setIsAuth] = useState(false);
     const [form, setForm] = useState({});
     const [err, setErr] = useState('');
 
+    const validated = () => {
+
+        if (form.name == undefined) {
+            setErr("Por favor, preencha seu nome.");
+            return;
+        };
+        if (form.axleCount == undefined) {
+            setErr("Por favor, preencha a quantidade de eixos.");
+            return;
+        };
+        if (form.weightPerAxle == undefined) {
+            setErr("Por favor, preencha o peso suportado por cada eixo.");
+            return;
+        };
+        if (form.limitedWeight == undefined) {
+            setErr("Por favor, preencha o peso total suportado.");
+            return;
+        };
+        if (form.height == undefined) {
+            setErr("Por favor, preencha a altura do caminhão.");
+            return;
+        };
+        if (form.width == undefined) {
+            setErr("Por favor, preencha a largura do caminhão.");
+            return;
+        }; 
+        register();
+    };
+
     const register = async () => {
+      
         try{
             
             const password = form.password;
@@ -67,7 +101,7 @@ export default function Register({navigation}) {
             } else {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 await storeUserData(form);
-                setIsAuth(true);
+                navigation.navigate('Home');
             }
         } catch (error) {
             let err = error.code;
@@ -84,18 +118,22 @@ export default function Register({navigation}) {
             <ScrollView>
             <Container>
                 <ImageLogo source={require('../../assets/rotaD.png')} />
+                <Text style={{color: "#FFF", fontSize: 22, paddingBottom: 30}}>Informações Pessoais</Text>
+                <Label>Nome</Label>
                 <Form>
                 <StyledInput
                     placeholder="Digite seu nome"
                     onChangeText={Name => setForm({...form, name:Name})}
                 />
                 </Form>
+                <Label>E-mail</Label>
                 <Form>
                 <StyledInput
                     placeholder="Digite seu e-mail"
                     onChangeText={Email => setForm({...form, email:Email})}
                 />
                 </Form>
+                <Label>Senha</Label>
                 <Form>
                 <StyledInput
                     placeholder="Digite sua senha"
@@ -103,6 +141,7 @@ export default function Register({navigation}) {
                     onChangeText={Password => setForm({...form, password:Password})}
                 />
                 </Form>
+                <Label>Confirme Senha</Label>
                 <Form>
                 <StyledInput
                     placeholder="Confirme sua senha"
@@ -110,12 +149,15 @@ export default function Register({navigation}) {
                     onChangeText={ConfirmPassword => setForm({...form, confirmPassword:ConfirmPassword})}
                 />
                 </Form>
+                <Text style={{color: "#FFF", fontSize: 22, paddingTop:30, paddingBottom:30}}>Informações do Caminhão</Text>
+                <Label>Nº de Eixos</Label>
                 <Form>
                 <StyledInput
                     placeholder="Nº de Eixos"
                     onChangeText={AxleCount => setForm({...form, axleCount: parseFloat(AxleCount)})}   
                 />
                 </Form>
+                <Label>Peso Máximo Suportado por Eixo</Label>
                 <Form>
                 <StyledInput
                     placeholder="Peso Máximo Suportado por Eixo"
@@ -123,6 +165,7 @@ export default function Register({navigation}) {
                 />
                 <Text>toneladas</Text>
                 </Form>
+                <Label>Peso Máximo Suportado</Label>
                 <Form>
                 <StyledInput
                     placeholder="Peso Máximo Suportado"
@@ -130,6 +173,7 @@ export default function Register({navigation}) {
                 />
                 <Text>toneladas</Text>
                 </Form>
+                <Label>Altura</Label>
                 <Form>
                     <StyledInput
                         placeholder="Altura"
@@ -137,6 +181,7 @@ export default function Register({navigation}) {
                     />
                     <Text>metros</Text>
                 </Form>
+                <Label>Largura</Label>
                 <Form>
                 <StyledInput
                     placeholder="Largura"
@@ -144,6 +189,7 @@ export default function Register({navigation}) {
                 />
                 <Text>metros</Text>
                 </Form>
+                <Label>Comprimento</Label>
                 <Form>
                 <StyledInput
                     placeholder="Comprimento"
@@ -152,15 +198,13 @@ export default function Register({navigation}) {
                 <Text>metros</Text>
                 </Form>
 
-                <RegisterButton onPress={register}>
+                {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18, maxWidth: 320, textAlign: "center"}}>{ err} </Text>: null}
+                <RegisterButton onPress={validated}>
                     <Text style={{color: "#FFF", fontSize: 18}}>Registrar</Text>
                 </RegisterButton>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={{color: "#FFF", fontSize: 18, padding: 12}}>Já é registrado? Faça o login. </Text>
                 </TouchableOpacity>
-
-                {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}>{ err} </Text>: null}
-                {isAuth ? navigation.navigate('Home') : null}
                 </Container>
             </ScrollView>
             </View>

@@ -16,16 +16,16 @@ export default function Map({navigation}) {
         width: 60px;
         height: 60px;
         border-radius: 50px;
-        background-color: #212121;
+        background-color: #fff;
         margin-bottom: 16px;
     `;
 
     const NewRoute = styled(TouchableOpacity)`
         align-items: center;
         justify-content: center;
-        width: 120px;
+        width: 160px;
         border-radius: 50px;
-        height: 40px;
+        height: 42px;
         background-color: #CD3C3C;
     `;
 
@@ -34,9 +34,8 @@ export default function Map({navigation}) {
         flex-direction: row;
         bottom: 0;
         width: 100%;
-        height: 160px;
-        padding-left: 8px;
-        padding-bottom: 8px;
+        height: 200px;
+        padding: 10px 0 10px 14px;
         background-color: #212121;
     `;
 
@@ -51,6 +50,11 @@ export default function Map({navigation}) {
     const SummaryText = styled(Text)`
         font-size: 16px;
         color: #FFF;
+    `;
+
+    const ImageButton = styled(Image)`
+        height: 60px;
+        width: 60px;
     `;
 
     const [region, setRegion] = useState(null);
@@ -192,14 +196,14 @@ export default function Map({navigation}) {
                         {alternativeRoute && allRoutes.length > 1 ? 
                             allRoutes.slice(1).map(route => {
                                 let route_coordinates = [];
-                                console.log('ALTERNATIVE ROUTE =>', route)
                                 route.shape.map((m) => {
                                     let latlong = m.split(',');
                                     let latitude = parseFloat(latlong[0]);
                                     let longitude = parseFloat(latlong[1]);
                                     route_coordinates.push({latitude: latitude, longitude: longitude});
                                 });
-                                let color = switchColors(colorCount+1);
+                                colorCount++;
+                                let color = switchColors(colorCount);
                                     return <Polyline coordinates={route_coordinates} tappable onPress={() => updateSummary(route)} strokeWidth={7} strokeColor={color} geodesic={true}/>
                             }) : null
                         }
@@ -208,7 +212,7 @@ export default function Map({navigation}) {
             </MapView>
 
             <DrawerButton style={{position: 'absolute', top: 8, left: 16}} onPress={() => navigation.openDrawer()}>
-                <Image source={require('../../assets/hamburguer.png')} />
+                <ImageButton source={require('../../assets/hamburguer.png')} />
             </DrawerButton>
 
             {!routeCoordinates.length ? <Search getRoutes={makeRoute}/> : null}
@@ -231,7 +235,7 @@ export default function Map({navigation}) {
                             <SummaryText>{formatDistance(routeData.summary.distance)} Km</SummaryText>
                             <SummaryText>{formatTime(routeData.summary.travelTime)} Horas</SummaryText>
                             {alternativeRoute ? <View style={{height: 40}} /> : <NewRoute onPress={() => alternativeRoutes()}>
-                                <Text style={{color: "#FFF", fontSize: 14}}>Rotas alternativas</Text>
+                                <Text style={{color: "#FFF", fontSize: 16}}>Rotas alternativas</Text>
                             </NewRoute>} 
                         </SummaryColumn>
                     </SummaryContainer>

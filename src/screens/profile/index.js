@@ -42,6 +42,7 @@ const RegisterButton = styled(TouchableOpacity)`
 const Header = styled(View)`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     width:100%;
     height: 64px;
@@ -55,28 +56,15 @@ const ImageButtonBack = styled(Image)`
     margin: 0 10px;
  `;
 
- const StyledText = styled(View)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
- `;
 
-// const StyledInput = styled(TextInput)`
-//     height: 58px;
-//     width: 90%;
-//     background-color: #FFF;
-//     margin-bottom: 16px;
-// `;
+const Label = styled(Text)`
+color: #FFF;
+font-size: 16px;
+align-self: flex-start;
+margin-left: 20px;
 
-// const LoginButton = styled(TouchableOpacity)`
-//     align-items: center;
-//     justify-content: center;
-//     width: 180px;
-//     border-radius: 50px;
-//     height: 60px;
-//     background-color: #CD3C3C;
-//     margin-bottom: 16px;
-// `;
+`;
+
 
 export default function Profile({navigation}) {
 
@@ -100,8 +88,19 @@ export default function Profile({navigation}) {
 
     const updateProfile = async () => {
         try {
-            console.log('to aqui')
-            await updateUserData(form).then(() => {
+            let newForm = {
+                name: form.name,
+                email: form.email,
+                password: form.password,
+                confirmPassword: form.confirmPassword,
+                axleCount: parseFloat(form.axleCount),
+                weightPerAxle: parseFloat(form.weightPerAxle),
+                limitedWeight: parseFloat(form.limitedWeight),
+                height: parseFloat(form.height),
+                width: parseFloat(form.width),
+                length: parseFloat(form.length),
+            };
+            await updateUserData(newForm).then(() => {
                 ToastAndroid.show(
                     "Perfil atualizado com sucesso!",
                     ToastAndroid.SHORT
@@ -121,7 +120,7 @@ export default function Profile({navigation}) {
         );
     }
     
-    if(form.length){
+    if(form !== {}){
         return (
             <View>
                 <ScrollView>
@@ -131,13 +130,10 @@ export default function Profile({navigation}) {
                     <ImageButtonBack source={require('../../assets/back.png')}>
                     </ImageButtonBack>
                     </TouchableOpacity>
-                    {/* <Button
-                    title="Voltar"
-                    
-                    /> */}
-                    <Text style={{color: '#fff', fontSize: 28}}>Editar Perfil</Text>
+                    <Text style={{color: '#fff', fontSize: 28, marginRight: 130}}>Editar Perfil</Text>
                 </Header>
-                    
+                <Text style={{color: "#FFF", fontSize: 22, paddingBottom: 30}}>Informações Pessoais</Text>
+                    <Label>Nome</Label>
                     <Form>
                     <StyledInput
                         value={form.name}
@@ -145,6 +141,7 @@ export default function Profile({navigation}) {
                         onChangeText={Name => setForm({...form, name:Name})}
                     />
                     </Form>
+                    <Label>E-mail</Label>
                     <Form>
                     <StyledInput
                         value={form.email}
@@ -152,6 +149,7 @@ export default function Profile({navigation}) {
                         onChangeText={Email => setForm({...form, email:Email})}
                     />
                     </Form>
+                    <Label>Senha</Label>
                     <Form>
                     <StyledInput
                         value={form.password}
@@ -160,6 +158,7 @@ export default function Profile({navigation}) {
                         onChangeText={Password => setForm({...form, password:Password})}
                     />
                     </Form>
+                    <Label>Confirme Senha</Label>
                     <Form>
                     <StyledInput
                         value={form.confirmPassword}
@@ -168,50 +167,57 @@ export default function Profile({navigation}) {
                         onChangeText={ConfirmPassword => setForm({...form, confirmPassword:ConfirmPassword})}
                     />
                     </Form>
+                    <Text style={{color: "#FFF", fontSize: 22, paddingTop:30, paddingBottom:30}}>Informações do Caminhão</Text>
+                    <Label>Nº de Eixos</Label>
                     <Form>
                     <StyledInput
                         value={form.axleCount.toString()}
                         placeholder="Nº de Eixos"
-                        onChangeText={AxleCount => setForm({...form, axleCount: parseFloat(AxleCount)})}   
+                        onChangeText={AxleCount => setForm({...form, axleCount: AxleCount})}   
                     />
                     </Form>
+                    <Label>Peso Máximo Suportado por Eixo</Label>
                     <Form>
                     <StyledInput
                         value={form.weightPerAxle.toString()}
                         placeholder="Peso Máximo Suportado por Eixo"
-                        onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: parseFloat(WeightPerAxle)})}   
+                        onChangeText={WeightPerAxle => setForm({...form, weightPerAxle: WeightPerAxle})}   
                     />
                     <Text>toneladas</Text>
                     </Form>
+                    <Label>Peso Máximo Suportado</Label>
                     <Form>
                     <StyledInput
                         value={form.limitedWeight.toString()}
                         placeholder="Peso Máximo Suportado"
-                        onChangeText={LimitedWeight => setForm({...form, limitedWeight: parseFloat(LimitedWeight)})}   
+                        onChangeText={LimitedWeight => setForm({...form, limitedWeight: LimitedWeight})}   
                     />
                     <Text>toneladas</Text>
                     </Form>
+                    <Label>Altura</Label>
                     <Form>
                         <StyledInput
                             value={form.height.toString()}
                             placeholder="Altura"
-                            onChangeText={Height => setForm({...form, height: parseFloat(Height)})}   
+                            onChangeText={Height => setForm({...form, height: Height})}   
                         />
                         <Text>metros</Text>
                     </Form>
+                    <Label>Largura</Label>
                     <Form>
                     <StyledInput
                         value={form.width.toString()}
                         placeholder="Largura"
-                        onChangeText={Width => setForm({...form, width: parseFloat(Width)})}   
+                        onChangeText={Width => setForm({...form, width: Width})}   
                     />
                     <Text>metros</Text>
                     </Form>
+                    <Label>Comprimento</Label>
                     <Form>
                     <StyledInput
                         value={form.length.toString()}
                         placeholder="Comprimento"
-                        onChangeText={Length => setForm({...form, length: parseFloat(Length)})}   
+                        onChangeText={Length => setForm({...form, length: Length})}   
                     />
                     <Text>metros</Text>
                     </Form>
@@ -219,9 +225,7 @@ export default function Profile({navigation}) {
                     <RegisterButton onPress={updateProfile}>
                         <Text style={{color: "#FFF", fontSize: 18}}>Salvar</Text>
                     </RegisterButton>
-    {/* 
-                    {err.length ? <Text style={{color: "#CD3C3C", fontSize: 18}}>{ err} </Text>: null}
-                    {isAuth ? navigation.navigate('Home') : null} */}
+
                     </Container>
                     </ScrollView>
                     </View>
