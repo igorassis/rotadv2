@@ -2,7 +2,7 @@ import axios from 'axios';
 import { retriveUserData } from './storage';
 
 const APP_ID = 'nQx44ZNmmR1Ti3oIe3cR';
-const API_KEY = '4A8pxE3zn5R3zJp9g_ZXziLzTFGEzLNsY8SU3hnNfAc';
+const API_KEY = '';
 const baseUrl = 'https://route.ls.hereapi.com/routing/7.2/calculateroute.json';
 let user = {};
 
