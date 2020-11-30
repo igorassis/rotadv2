@@ -11,7 +11,7 @@ export default function Search({getRoutes}) {
                 getRoutes(data, details);
             }}
             query={{
-                key: 'AIzaSyDyhv_pXanMg_uLlo7nv5W_h8gwh-zXdHg',
+                key: '',
                 language: 'pt'
             }}
             textInputProps={{
